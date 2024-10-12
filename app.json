@@ -1,0 +1,19 @@
+{
+  "name": "Session Bot",
+  "description": "Session Extraction Bot.",
+  "scripts": {
+    "postdeploy": "python3 Abody.py"
+  },
+  "env": {
+    "PORT": {
+      "description": "(مب ضروري يحبي) حط البورت",
+      "required": false
+    }
+  },
+  "addons": [],
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ]
+}
