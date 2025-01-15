@@ -458,8 +458,7 @@ async def generator_and_about(app,m):
         text += f'🆔 بطاقة تعريف : {get.id}\n'
         text += f'📞 رقم الهاتف : {phone}\n'
         text += f'🔒 تم حفظ الجلسة في الرسائل المحفوظة'
-   string_session = await c.export_session_string()
-   print(session_string)
+        string_session = await c.export_session_string()
         await rep.delete()
         await c.send_message('me', f'تم استخراج جلسة بايروجرام {v2} هذه الجلسة\n\n`{string_session}`')
         await c.disconnect()
